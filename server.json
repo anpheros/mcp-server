@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.anpheros/fhir",
+  "title": "Anpheros FHIR",
+  "description": "HL7 FHIR R4 health-data API for AI agents: free sandbox, 30 synthetic patients, AI-ready context.",
+  "version": "0.3.0",
+  "websiteUrl": "https://developers.anpheros.com/guides/mcp",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://platform.anpheros.com/mcp",
+      "headers": [
+        {
+          "name": "X-API-Key",
+          "description": "Optional sandbox API key (sk_test_…) for developers; people connect with OAuth instead",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

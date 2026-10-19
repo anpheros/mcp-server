@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "anpheros-fhir": {
+      "url": "https://platform.anpheros.com/mcp",
+      "headers": { "X-API-Key": "sk_test_your_sandbox_key" }
+    }
+  }
+}

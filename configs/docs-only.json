@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "anpheros-docs": { "type": "http", "url": "https://platform.anpheros.com/mcp/docs" }
+  }
+}

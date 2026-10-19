@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "anpheros-fhir": {
+      "type": "http",
+      "url": "https://platform.anpheros.com/mcp",
+      "headers": { "X-API-Key": "${input:anpheros-key}" }
+    }
+  },
+  "inputs": [
+    { "id": "anpheros-key", "type": "promptString", "description": "Anpheros sandbox key (sk_test_…)", "password": true }
+  ]
+}
