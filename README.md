@@ -1,12 +1,13 @@
 # Anpheros FHIR MCP server: health data for AI agents
 
-**A hosted Model Context Protocol (MCP) server for HL7 FHIR R4 health data.** Connect Claude, Cursor, VS Code or any
-MCP client to a FHIR API with 30 synthetic patients, and let the agent search records, build AI-ready patient
-context, read International Patient Summaries, validate FHIR resources and import lab reports.
+**A hosted Model Context Protocol (MCP) server for HL7 FHIR R4 health data.** People connect Claude (and ChatGPT, for notes)
+to **their own Anpheros health record**, with consent per section and per duration. Developers connect
+Claude Code, Cursor or VS Code to a free FHIR sandbox with 30 synthetic patients, and let the agent search records,
+build AI-ready patient context, read International Patient Summaries, validate FHIR resources and import lab reports.
 
 - Endpoint: `https://platform.anpheros.com/mcp` (streamable HTTP)
 - Official MCP Registry: [`com.anpheros/fhir`](https://registry.modelcontextprotocol.io/v0/servers?search=com.anpheros/fhir)
-- Auth: a sandbox API key (`X-API-Key` or `Authorization: Bearer`), or OAuth with a consent screen (OAuth currently connects sandbox records)
+- Auth: OAuth with a consent screen (a person's own record), or a sandbox API key (`X-API-Key` or `Authorization: Bearer`) for developers
 - Docs-only server, no account needed: `https://platform.anpheros.com/mcp/docs`
 
 The server code runs in the Anpheros platform; this repository holds its registry entry ([`server.json`](server.json)),
@@ -52,10 +53,13 @@ claude mcp add --transport http anpheros-fhir https://platform.anpheros.com/mcp 
 }
 ```
 
-### Claude.ai (custom connector)
+### Claude.ai or ChatGPT (your own record)
 
-Settings → Connectors → **Add custom connector** → `https://platform.anpheros.com/mcp`. Claude signs in with OAuth and
-the consent screen shows exactly what it may read (read-only by default). OAuth currently connects sandbox records.
+Claude: Settings → Connectors → **Add custom connector** → `https://platform.anpheros.com/mcp`. You sign in with your
+Anpheros account and choose what Claude may read (nothing is pre-ticked) and for how long (1, 30, 90 or 365 days).
+ChatGPT: add the same URL as a connector; for now it can only note symptoms and measurements you tell it, never read
+your record. Every note is a proposal you approve in the Anpheros app. You see every read in Connections and can stop
+access at any time. Adults only, own record only.
 
 Ready-made files: [`configs/`](configs).
 
@@ -81,6 +85,7 @@ Ready-made files: [`configs/`](configs).
 | `create_fhir_resource` | create a FHIR resource in the sandbox |
 | `create_patient` | create a made-up test patient |
 | `import_lab_report` | a CSV or HL7 v2 lab report → laboratory Observations |
+| `log_symptom`, `log_measurement`, `add_note` | with a person's consent: propose an entry to their record, added only when they approve it |
 | `sandbox_status` | quotas and state of your sandbox |
 | `reset_sandbox` | restore the 30 synthetic patients |
 
@@ -89,7 +94,7 @@ Prompts: `summarize_for_doctor`, `labs_csv_to_fhir`, `build_integration`.
 ## Safety
 
 - Sandbox keys see synthetic patients only; production keys are refused by the MCP endpoint.
-- With OAuth, an agent reaches one person's record only after that person approves it, read-only unless they allow more; they can revoke it at any time.
+- With OAuth, an assistant reaches one adult's own record only after that person ticks what it may read and agrees explicitly; every read appears in their Connections and they can stop it at any time.
 - Every write records Provenance (`urn:anpheros:mcp`), so AI-written data is never mixed up with clinical facts.
 - The server returns records and patterns, not diagnoses or treatment advice.
 
