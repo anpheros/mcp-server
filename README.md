@@ -97,6 +97,8 @@ Prompts: `summarize_for_doctor`, `labs_csv_to_fhir`, `build_integration`.
 - With OAuth, an assistant reaches one adult's own record only after that person ticks what it may read and agrees explicitly; every read appears in their Connections and they can stop it at any time.
 - Every write records Provenance (`urn:anpheros:mcp`), so AI-written data is never mixed up with clinical facts.
 - The server returns records and patterns, not diagnoses or treatment advice.
+- `search_health_terms` and `get_health_term`: ICD-10 and ICD-11 codes and titles come from the classifications, unchanged; show the entry's attribution to the user. General information, not a diagnosis.
+- AI here supports people and their clinicians; diagnosis and treatment remain the responsibility of health professionals.
 
 ## Guides
 
